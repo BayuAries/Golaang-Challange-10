@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_BookService_GeBookByID(t *testing.T) {
+func Test_BookService_GetBookByID(t *testing.T) {
 	type testCase struct {
 		name           string
 		wantError      bool
@@ -137,6 +137,9 @@ func Test_BookService_CreateBook(t *testing.T) {
 			Author:   "adi",
 		},
 		expectedError: errors.New("invalid book name length"),
+		onBookRepo: func(mock *mocks.MockBookRepo) {
+			mock.EXPECT().CreateBook(gomock.Any()).Return(model.Book{}, errors.New("invalid book name length")).Times(1)
+		},
 	})
 
 	for _, testCase := range testTable {
@@ -258,7 +261,6 @@ func Test_BookService_DeleteBook(t *testing.T) {
 		name           string
 		wantError      bool
 		id             int64
-		expectedResult model.Book
 		expectedError  error
 		onBookRepo     func(mock *mocks.MockBookRepo)
 	}
@@ -272,7 +274,6 @@ func Test_BookService_DeleteBook(t *testing.T) {
 		onBookRepo: func(mock *mocks.MockBookRepo) {
 			mock.EXPECT().DeleteBook(gomock.Any()).Return(nil).Times(1)
 		},
-		expectedResult: model.Book{},
 	})
 
 	testTabel = append(testTabel, testCase{

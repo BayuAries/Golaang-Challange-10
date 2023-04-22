@@ -22,7 +22,13 @@ func (s *Service) CreateBook(in model.Book) (res model.Book, err error) {
 	return res, nil
 }
 func (s *Service) GetBooks() (res []model.Book, err error) {
-	return s.repo.GetBooks()
+	// return s.repo.GetBooks()
+	res, err = s.repo.GetBooks()
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
 }
 
 func (s *Service) GetBookById(id int64) (res model.Book, err error) {
@@ -37,9 +43,21 @@ func (s *Service) GetBookById(id int64) (res model.Book, err error) {
 }
 
 func (s *Service) UpdateBook(in model.Book) (res model.Book, err error) {
-	return s.repo.UpdateBook(in)
+	// return s.repo.UpdateBook(in)
+	res, err = s.repo.UpdateBook(in)
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
 }
 
 func (s *Service) DeleteBook(id int64) (err error) {
-	return s.repo.DeleteBook(id)
+	// return s.repo.DeleteBook(id)
+	err = s.repo.DeleteBook(id)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
