@@ -26,7 +26,14 @@ func (s *Service) GetBooks() (res []model.Book, err error) {
 }
 
 func (s *Service) GetBookById(id int64) (res model.Book, err error) {
-	return s.repo.GetBookById(id)
+	res, err = s.repo.GetBookById(id)
+	if err != nil {
+		return res, err
+	}
+	// res.Author = "bayu"
+
+	return res, nil
+	// return s.repo.GetBookById(id)
 }
 
 func (s *Service) UpdateBook(in model.Book) (res model.Book, err error) {
